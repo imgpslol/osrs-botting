@@ -4,34 +4,34 @@ import random
 import cv2
 import numpy as np
 
-"Sleep for a random amount of time between min_time and max_time."
+# Sleep for a random amount of time between min_time and max_time
 def random_sleep(min_time, max_time):
     sleep_time = random.uniform(min_time, max_time)
     time.sleep(sleep_time)
 
-"Randomly offset the target click location to simulate human error." #Update
+# Randomly offset the target click location to simulate human error. -- Update with whatever rooftop course you're using
 def random_misclick(x, y, max_offset=5):
     offset_x = random.randint(-max_offset, max_offset)
     offset_y = random.randint(-max_offset, max_offset)
     return x + offset_x, y + offset_y
 
-"Move the mouse in a human-like curved path to the target location."
+# Move the mouse in a human-like curved path to the target location.
 def move_mouse(x, y):
     pyautogui.moveTo(x, y, duration=random.uniform(0.1, 0.5), tween=pyautogui.easeInOutQuad)
 
-"Click at the given coordinates with random misclicks."
+# Click at the given coordinates with random misclicks.
 def click(x, y):
     target_x, target_y = random_misclick(x, y)
     move_mouse(target_x, target_y)
     pyautogui.click()
 
-"Capture a screenshot of the screen for object detection."
+# Capture a screenshot of the screen for object detection.
 def capture_screen():
     screenshot = pyautogui.screenshot()
     screenshot = cv2.cvtColor(np.array(screenshot), cv2.COLOR_RGB2BGR)
     return screenshot
 
-"Find the location of a specific object on the screen using template matching."
+# Find the location of a specific object on the screen using template matching.
 def find_object_on_screen(template_path):
     screenshot = capture_screen()
     template = cv2.imread(template_path, 0)
@@ -43,7 +43,7 @@ def find_object_on_screen(template_path):
         return max_loc
     return None
 
-"Main function to perform an automated action."
+# Main function to perform an automated action.
 def perform_action():
     
     # Example: Finding a specific object on the screen
